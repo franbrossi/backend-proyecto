@@ -16,5 +16,14 @@
     "price": 15000,
     "category": "Bienestar",
     "available": true
+  },
+  {
+    "id": "65d652d5-f4af-4de4-a29d-536b702c6e3c",
+    "name": "Consulta Nutricional",
+    "description": "Evaluación de dieta y armado de plan alimenticio.",
+    "duration": 45,
+    "price": 12000,
+    "category": "Salud",
+    "available": true
   }
 ]
