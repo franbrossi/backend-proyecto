@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dfc84da5-ac3a-41bd-990f-5c980275b1e0",
+    "name": "Corte de pelo clásico",
+    "description": "Corte tradicional a tijera o máquina. Incluye lavado.",
+    "duration": 30,
+    "price": 9500,
+    "category": "Peluquería",
+    "available": true
+  },
+  {
+    "id": "ca32d8eb-6f5a-46c3-938e-d799eda6c285",
+    "name": "Masaje Descontracturante",
+    "description": "Sesión de 60 minutos de masajes de tejido profundo.",
+    "duration": 60,
+    "price": 15000,
+    "category": "Bienestar",
+    "available": true
+  }
+]
