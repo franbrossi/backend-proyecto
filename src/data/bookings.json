@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ca80784d-811d-40a3-89f4-45319e49c2c0",
+    "clientName": "Lionel Messi",
+    "clientEmail": "lio@campeon.com",
+    "date": "2026-10-15",
+    "time": "18:00",
+    "status": "pendiente",
+    "services": [
+      {
+        "service": "65d652d5-f4af-4de4-a29d-536b702c6e3c",
+        "quantity": 2
+      }
+    ]
+  }
+]
