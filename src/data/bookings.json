@@ -12,5 +12,14 @@
         "quantity": 2
       }
     ]
+  },
+  {
+    "id": "67fde080-d989-4532-b4ac-b9a175acd5c5",
+    "clientName": "Dibu Martínez",
+    "clientEmail": "dibu@campeon.com",
+    "date": "2026-11-20",
+    "time": "15:00",
+    "status": "pendiente",
+    "services": []
   }
 ]
