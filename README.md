@@ -19,6 +19,19 @@ Primera versión funcional del sistema backend para la gestión de turnos y rese
    * `PORT=8080`
    * `NODE_ENV=development`
 
+
+## 🏗️ Arquitectura en Capas
+
+En esta versión, el proyecto fue refactorizado para implementar una arquitectura profesional basada en capas. Esto separa las responsabilidades, evita el acoplamiento y prepara el sistema para escalar a bases de datos reales. El flujo de datos es el siguiente:
+
+**`Router` ➔ `Controller` ➔ `Service` ➔ `Repository` ➔ `DAO` ➔ `Archivo JSON`**
+
+*   **Routes (Rutas):** Solo definen los endpoints de la API y derivan la petición al controlador. No contienen ningún tipo de lógica.
+*   **Controllers (Controladores):** Reciben la petición HTTP (`req`), extraen los parámetros/body, llaman a la capa de servicios y envían la respuesta (`res.json`).
+*   **Services (Servicios):** Es el "cerebro" del sistema. Aquí residen exclusivamente las reglas de negocio (por ejemplo, validar si un servicio existe antes de reservarlo o sumar la cantidad de un servicio duplicado). No saben qué es un `req` o un `res`.
+*   **Repositories (Repositorios):** Actúan como un intermediario que ofrece métodos estandarizados de acceso a datos para que los consuma el Service.
+*   **DAO (Data Access Object):** Es la capa más baja. Se encarga únicamente de la lectura y escritura cruda en la persistencia (archivos JSON mediante FileSystem). No opina ni aplica reglas de negocio.
+
 ## 🏃‍♂️ Cómo ejecutar el proyecto
 
 Para levantar el servidor web, ejecutar el siguiente comando:

@@ -20,6 +20,11 @@
     "date": "2026-11-20",
     "time": "15:00",
     "status": "pendiente",
-    "services": []
+    "services": [
+      {
+        "service": "65d652d5-f4af-4de4-a29d-536b702c6e3c",
+        "quantity": 2
+      }
+    ]
   }
 ]
