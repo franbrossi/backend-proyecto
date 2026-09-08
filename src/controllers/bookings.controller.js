@@ -27,7 +27,6 @@ export const addServiceToBooking = async (req, res) => {
     const updatedBooking = await bookingsService.addServiceToBooking(bid, sid);
     res.status(200).json({ status: 'success', payload: updatedBooking });
   } catch (error) {
-    // Manejo de errores específicos según lo que devolvió la lógica de negocio (Service)
     if (error.message === 'SERVICE_NOT_FOUND') {
       return res.status(404).json({ status: 'error', message: 'El servicio que intenta agregar no existe' });
     }
