@@ -11,3 +11,7 @@ export const create = async (bookingData) => {
 export const update = async (id, bookingData) => {
   return await BookingModel.findByIdAndUpdate(id, bookingData, { new: true });
 };
+
+export const getAll = async () => {
+    return await BookingModel.find().lean(); 
+};

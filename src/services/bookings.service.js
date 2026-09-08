@@ -28,4 +28,10 @@ export const addServiceToBooking = async (bid, sid) => {
   }
 
   return await bookingsRepository.update(bid, booking);
+
+
+};
+
+export const getAll = async () => {
+    return await bookingsRepository.getAll();
 };

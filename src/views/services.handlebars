@@ -1,0 +1,25 @@
+<h2>Catálogo de Servicios</h2>
+<div id="services-list">
+        {{#if services.length}}
+        {{#each services}}
+            <div class="card">
+                <h3>{{this.name}}</h3>
+                <p><strong>Descripción:</strong> {{this.description}}</p>
+                <p><strong>Categoría:</strong> {{this.category}}</p>
+                <p><strong>Duración:</strong> {{this.duration}} minutos</p>
+                <p><strong>Precio:</strong> ${{this.price}}</p>
+                <p>
+                    <strong>Disponibilidad:</strong> 
+                    {{#if this.available}}
+                        <span style="color: green;">Disponible</span>
+                    {{else}}
+                        <span style="color: red;">No Disponible</span>
+                    {{/if}}
+                </p>
+            </div>
+        {{/each}}
+    {{else}}
+        <p>No hay servicios cargados en la base de datos.</p>
+    {{/if}}
+
+</div>

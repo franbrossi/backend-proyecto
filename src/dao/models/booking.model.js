@@ -9,7 +9,7 @@ const bookingSchema = new mongoose.Schema({
   services: [{
     service: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'services' // Relación con la colección de servicios
+      ref: 'services' 
     },
     quantity: { type: Number, default: 1 }
   }]

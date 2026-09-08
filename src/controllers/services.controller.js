@@ -23,6 +23,8 @@ export const getServiceById = async (req, res) => {
 export const createService = async (req, res) => {
   try {
     const newService = await servicesService.createService(req.body);
+    const io = req.app.get('socketio');
+    io.emit('nuevoServicio', newService);
     res.status(201).json({ status: 'success', payload: newService });
   } catch (error) {
     if (error.message.includes('Faltan campos')) return res.status(400).json({ status: 'error', message: error.message });
