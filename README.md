@@ -1,11 +1,13 @@
-# Backend - Sistema de Reservas y Turnos (API REST + FileSystem)
+# Backend - Sistema de Reservas y Turnos (API REST + MongoDB + SSR)
 
-Primera versión funcional del sistema backend para la gestión de turnos y reservas. El proyecto está construido con **Node.js** y **Express**, implementando una arquitectura de API REST. La persistencia de los datos se maneja mediante archivos JSON locales (FileSystem), permitiendo que la información de servicios y reservas se mantenga guardada al reiniciar el servidor.
+Versión actualizada del sistema backend para la gestión de turnos y reservas. El proyecto está construido con **Node.js** y **Express**, implementando una arquitectura de API REST en capas. La persistencia de los datos se migró a la nube utilizando **MongoDB Atlas** y **Mongoose**. Además, se incorporó una capa visual (Server-Side Rendering) y funcionalidades en tiempo real.
 
 ## 🚀 Tecnologías utilizadas
 * Node.js (Sintaxis ESM)
 * Express.js
-* Módulo nativo `fs/promises` y `crypto`
+* MongoDB Atlas & Mongoose (Persistencia de datos)
+* Handlebars (Motor de plantillas para vistas SSR)
+* Socket.io (Comunicación bidireccional en tiempo real)
 * Variables de entorno (`dotenv`)
 
 ## ⚙️ Instalación y Configuración
@@ -18,19 +20,20 @@ Primera versión funcional del sistema backend para la gestión de turnos y rese
 3. Crear un archivo `.env` en la raíz del proyecto basándose en `.env.example`. 
    * `PORT=8080`
    * `NODE_ENV=development`
+   * `MONGO_URI=mongodb+srv://<usuario>:<password>@cluster0.mongodb.net/detercop?retryWrites=true&w=majority` (Obligatorio para la conexión a la base de datos)
 
 
 ## 🏗️ Arquitectura en Capas
 
 En esta versión, el proyecto fue refactorizado para implementar una arquitectura profesional basada en capas. Esto separa las responsabilidades, evita el acoplamiento y prepara el sistema para escalar a bases de datos reales. El flujo de datos es el siguiente:
 
-**`Router` ➔ `Controller` ➔ `Service` ➔ `Repository` ➔ `DAO` ➔ `Archivo JSON`**
+**`Router` ➔ `Controller` ➔ `Service` ➔ `Repository` ➔ `DAO` ➔ `Modelos (MongoDB)`**
 
 *   **Routes (Rutas):** Solo definen los endpoints de la API y derivan la petición al controlador. No contienen ningún tipo de lógica.
 *   **Controllers (Controladores):** Reciben la petición HTTP (`req`), extraen los parámetros/body, llaman a la capa de servicios y envían la respuesta (`res.json`).
 *   **Services (Servicios):** Es el "cerebro" del sistema. Aquí residen exclusivamente las reglas de negocio (por ejemplo, validar si un servicio existe antes de reservarlo o sumar la cantidad de un servicio duplicado). No saben qué es un `req` o un `res`.
 *   **Repositories (Repositorios):** Actúan como un intermediario que ofrece métodos estandarizados de acceso a datos para que los consuma el Service.
-*   **DAO (Data Access Object):** Es la capa más baja. Se encarga únicamente de la lectura y escritura cruda en la persistencia (archivos JSON mediante FileSystem). No opina ni aplica reglas de negocio.
+*   **DAO (Data Access Object):** Es la capa más baja. Se encarga únicamente de interactuar con la base de datos a través de los modelos de Mongoose (MongoDB). No opina ni     aplica reglas de negocio.
 
 ## 🏃‍♂️ Cómo ejecutar el proyecto
 
@@ -79,3 +82,13 @@ La API maneja dos recursos principales: **Servicios** (las prestaciones disponib
 * **POST /api/bookings/:bid/services/:sid**
   * Vincula un servicio existente a una reserva existente. 
   * *Nota de comportamiento:* Si el servicio no estaba en la reserva, lo agrega con `quantity: 1`. Si ya existía, incrementa su cantidad.
+
+## 🖥️ Vistas y Tiempo Real (Handlebars & Socket.io)
+
+El sistema incluye una interfaz gráfica renderizada desde el servidor para interactuar con los datos sin depender de herramientas como Postman.
+
+* **GET /views/services**
+  * Muestra el catálogo de servicios disponibles consumiendo datos reales de MongoDB.
+  * **Tiempo real:** Integrado con Socket.io. Si se crea un nuevo servicio mediante la API, la interfaz web se actualiza instantáneamente para todos los clientes conectados sin necesidad de recargar la página.
+* **GET /views/bookings**
+  * Panel de administración para visualizar el listado completo de las reservas registradas en el sistema.

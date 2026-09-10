@@ -3,6 +3,7 @@ import { engine } from 'express-handlebars';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import viewsRouter from './routes/views.router.js';
+import messagesRouter from './routes/messages.router.js';
 
 import  servicesRouter  from './routes/services.router.js';
 import  bookingsRouter  from './routes/bookings.router.js';
@@ -17,6 +18,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/api/messages', messagesRouter);
 
 
 app.engine('handlebars', engine());

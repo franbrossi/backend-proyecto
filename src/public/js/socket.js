@@ -23,3 +23,34 @@ socket.on('nuevoServicio', (servicio) => {
     
     lista.appendChild(tarjeta);
 });
+
+// --- EVENTOS DE SERVICIOS ---
+
+//  cuando se borra un servicio
+socket.on('servicioEliminado', (id) => {
+    const tarjeta = document.getElementById(`service-${id}`);
+    if (tarjeta) tarjeta.remove(); // Hace desaparecer la tarjeta de la pantalla
+});
+
+// actualizacion de un servicio
+socket.on('servicioActualizado', () => {
+    window.location.reload();
+});
+
+// --- EVENTOS DE RESERVAS ---
+
+//  nueva reserva
+socket.on('nuevaReserva', () => {
+    window.location.reload();
+});
+
+//  reserva borrada
+socket.on('reservaEliminada', (id) => {
+    const tarjeta = document.getElementById(`booking-${id}`);
+    if (tarjeta) tarjeta.remove();
+});
+
+//  reserva actualizada
+socket.on('reservaActualizada', () => {
+    window.location.reload();
+});

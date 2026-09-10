@@ -3,11 +3,12 @@
 <div id="bookings-list">
     {{#if bookings.length}}
         {{#each bookings}}
-            <div class="card" style="border-left: 4px solid #007bff;">
+            <div class="card" id="booking-{{this._id}}" style="border-left: 4px solid #007bff;">
                 <h3>Cliente: {{this.clientName}}</h3>
                 <p><strong>Email:</strong> {{this.clientEmail}}</p>
                 <p><strong>Fecha:</strong> {{this.date}}</p>
                 <p><strong>Hora:</strong> {{this.time}}</p>
+                <p><strong>Servicios vinculados:</strong> {{this.services.length}}</p>
                 <p>
                     <strong>Estado:</strong> 
                     <span style="background-color: #eee; padding: 3px 8px; border-radius: 12px; font-size: 0.9em;">

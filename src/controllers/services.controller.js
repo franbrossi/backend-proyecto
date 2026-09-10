@@ -36,6 +36,8 @@ export const updateService = async (req, res) => {
   try {
     const updatedService = await servicesService.updateService(req.params.sid, req.body);
     if (!updatedService) return res.status(404).json({ status: 'error', message: 'Servicio no encontrado' });
+    const io = req.app.get('socketio');
+    io.emit('servicioActualizado');
     res.status(200).json({ status: 'success', payload: updatedService });
   } catch (error) {
     res.status(500).json({ status: 'error', message: error.message });
@@ -46,6 +48,8 @@ export const deleteService = async (req, res) => {
   try {
     const deletedService = await servicesService.deleteService(req.params.sid);
     if (!deletedService) return res.status(404).json({ status: 'error', message: 'Servicio no encontrado' });
+    const io = req.app.get('socketio');
+    io.emit('servicioEliminado', req.params.sid);
     res.status(200).json({ status: 'success', payload: deletedService });
   } catch (error) {
     res.status(500).json({ status: 'error', message: error.message });
