@@ -1,13 +1,36 @@
 import * as servicesService from '../services/services.service.js';
 
 export const getServices = async (req, res) => {
-  try {
-    const { category, available } = req.query;
-    const services = await servicesService.getServices(category, available);
-    res.status(200).json({ status: 'success', payload: services });
-  } catch (error) {
-    res.status(500).json({ status: 'error', message: error.message });
-  }
+    try {
+        const { category, available, page, limit, sortBy, order } = req.query;
+
+        const filter = {};
+        if (category) filter.category = category;
+        if (available !== undefined) {
+            filter.available = available === 'true'; 
+        }
+        const options = {
+            page: page ? parseInt(page) : 1,
+            limit: limit ? parseInt(limit) : 10,
+            sortBy: sortBy || 'price', 
+            order: order || 'asc'
+        };
+
+        const result = await servicesService.getPaginatedServices(filter, options);
+        res.status(200).json({
+            status: 'success',
+            payload: result.docs,
+            totalDocs: result.totalDocs,
+            totalPages: result.totalPages,
+            prevPage: result.prevPage,
+            nextPage: result.nextPage,
+            page: result.page,
+            hasPrevPage: result.hasPrevPage,
+            hasNextPage: result.hasNextPage
+        });
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: error.message });
+    }
 };
 
 export const getServiceById = async (req, res) => {

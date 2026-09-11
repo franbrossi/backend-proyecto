@@ -13,5 +13,5 @@ export const update = async (id, bookingData) => {
 };
 
 export const getAll = async () => {
-    return await BookingModel.find().lean(); 
+    return await BookingModel.find().populate('services.service').lean();
 };

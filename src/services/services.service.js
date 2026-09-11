@@ -25,3 +25,7 @@ export const createService = async (serviceData) => {
 export const updateService = async (id, serviceData) => await servicesRepository.update(id, serviceData);
 
 export const deleteService = async (id) => await servicesRepository.deleteItem(id);
+
+export const getPaginatedServices = async (filter, options) => {
+    return await servicesRepository.getPaginatedServices(filter, options);
+};

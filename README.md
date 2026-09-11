@@ -92,3 +92,22 @@ El sistema incluye una interfaz gráfica renderizada desde el servidor para inte
   * **Tiempo real:** Integrado con Socket.io. Si se crea un nuevo servicio mediante la API, la interfaz web se actualiza instantáneamente para todos los clientes conectados sin necesidad de recargar la página.
 * **GET /views/bookings**
   * Panel de administración para visualizar el listado completo de las reservas registradas en el sistema.
+
+## 🚀 Nuevas Funcionalidades (Última Entrega)
+
+### 1. Consultas Avanzadas, Paginación y Filtros
+El endpoint `GET /api/services` ahora soporta query params para no sobrecargar la base de datos.
+**Ejemplo de uso:**
+`GET /api/services?category=Limpieza&limit=5&sortBy=price&order=desc`
+- `category`: Filtra por la categoría del servicio.
+- `limit` y `page`: Permiten paginar los resultados (por defecto trae 10 por página).
+- `sortBy` y `order`: Permiten ordenar los resultados (ej: por precio de mayor a menor).
+La respuesta incluye metadatos útiles como `totalPages`, `hasNextPage`, `prevPage`, etc.
+
+### 2. Validaciones con Zod
+Se implementó un middleware de validación (`validate.middleware.js`) que intercepta las peticiones `POST` y `PUT` antes de que lleguen al controlador y a MongoDB.
+- Si los datos son inválidos (ej: falta un campo obligatorio o el precio no es un número), el servidor aborta la operación y devuelve un error `400 Bad Request` con un detalle claro de qué campo falló.
+
+### 3. Relaciones y Populate en Reservas
+Para evitar la duplicación de datos, las reservas ahora guardan únicamente el `ObjectId` de los servicios asociados.
+Al consultar una reserva específica mediante `GET /api/bookings/:bid`, Mongoose utiliza el método `.populate()` para buscar y devolver la información completa de cada servicio (nombre, descripción, precio, categoría) incrustada directamente en la respuesta de la reserva
